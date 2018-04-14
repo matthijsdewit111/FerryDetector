@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+from filters import adjust_gamma
+
 
 class VideoCamera(object):
     def __init__(self):
@@ -17,9 +19,8 @@ class VideoCamera(object):
 
     def get_frame(self):
         success, image = self.video.read()
-        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        hsv[:, :, 2] = (255 - hsv[:, :, 2]) * 0.5
-        lighter_image = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+
+        lighter_image = adjust_gamma(image, 1.5)
         combined_image = np.concatenate((image, lighter_image), axis=1)
 
         ret, jpeg = cv2.imencode('.jpg', combined_image)
