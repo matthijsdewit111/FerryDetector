@@ -20,7 +20,7 @@ class VideoCamera(object):
     def get_frame(self):
         success, image = self.video.read()
 
-        lighter_image = adjust_gamma(image, 1.5)
+        lighter_image = adjust_gamma(image, 2.5)
         combined_image = np.concatenate((image, lighter_image), axis=1)
 
         ret, jpeg = cv2.imencode('.jpg', combined_image)
