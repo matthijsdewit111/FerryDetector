@@ -17,7 +17,7 @@ class VideoCamera(object):
     def get_frame(self):
         success, image = self.video.read()
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        hsv[:, :, 2] += (255 - hsv[:, :, 2]) * 0.5
+        hsv[:, :, 2] = (255 - hsv[:, :, 2]) * 0.5
         img = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 
         ret, jpeg = cv2.imencode('.jpg', image)
