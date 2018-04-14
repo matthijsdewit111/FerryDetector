@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 
 class VideoCamera(object):
@@ -18,7 +19,8 @@ class VideoCamera(object):
         success, image = self.video.read()
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         hsv[:, :, 2] = (255 - hsv[:, :, 2]) * 0.5
-        img = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+        lighter_image = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+        combined_image = np.concatenate((image, lighter_image), axis=1)
 
-        ret, jpeg = cv2.imencode('.jpg', image)
+        ret, jpeg = cv2.imencode('.jpg', combined_image)
         return jpeg.tobytes()
